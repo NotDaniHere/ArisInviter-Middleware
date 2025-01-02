@@ -8,6 +8,8 @@ This is a simple flask app, easily configurable and customisable to fit your nee
 
 The middleware (flask app) connects to LoginSecurity's database (spigot plugin) and authenticates invites using the input username and password in order to invite a new player using the ArisInviter backend (the spigot plugin https://github.com/NotDaniHere/ArisInviter).
 
+Includes a simple html page (frontend) to authenticate via a browser.
+
 ## How to run it?
 **First method**
 Assuming you have placed the ```app.py``` in the main folder of your spigot server, and have installed LoginSecurity, you need to run this command to start the Middleware server:
