@@ -1,2 +1,4 @@
-# ArisInviter-Middleware
-Example middleware that authenticates a request by the user's LoginSecurity spigot plugin credentials.
+# ArisInviter Example Middleware
+## What does it do?
+
+This middleware connects to LoginSecurity's database (spigot plugin) and authenticates invites using the input username and password in order to invite a new player (using ArisInviter).
