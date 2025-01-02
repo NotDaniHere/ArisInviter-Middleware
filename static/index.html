@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Minecraft Invite</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      max-width: 400px;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #responseContainer {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      min-height: 50px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Minecraft Whitelist Invite</h1>
+  <form id="inviteForm">
+    <label for="username">Your Minecraft Username</label>
+    <input type="text" id="username" name="username" required />
+
+    <label for="password">Your Password</label>
+    <input type="password" id="password" name="password" required />
+
+    <label for="invite">Username to Invite</label>
+    <input type="text" id="invite" name="invite" required />
+
+    <button type="submit">Send Invite</button>
+  </form>
+
+  <div id="responseContainer"></div>
+
+  <script>
+    const form = document.getElementById('inviteForm');
+    const responseContainer = document.getElementById('responseContainer');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); 
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const invite = document.getElementById('invite').value.trim();
+      responseContainer.style.display = 'none';
+      responseContainer.textContent = '';
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/invite', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            username: username,
+            password: password,
+            invite: invite
+          })
+        });
+        const data = await response.json();
+        
+        responseContainer.style.display = 'block';
+        if (response.ok) {
+          responseContainer.style.borderColor = 'green';
+          responseContainer.textContent = data.message || 'Invite successful!';
+        } else {
+          responseContainer.style.borderColor = 'red';
+          responseContainer.textContent = data.error || 'Error occurred.';
+        }
+      } catch (error) {
+        responseContainer.style.display = 'block';
+        responseContainer.style.borderColor = 'red';
+        responseContainer.textContent = 'Network error: ' + error;
+      }
+    });
+  </script>
+</body>
+</html>
